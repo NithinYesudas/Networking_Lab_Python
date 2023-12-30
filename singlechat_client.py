@@ -9,3 +9,4 @@ while True:
     client.send(message.encode())
     data, server = client.recvfrom(1024)
     print(f"Server: {data.decode()}")
+    

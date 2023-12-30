@@ -6,6 +6,5 @@ server.listen(5)
 client, client_address =server.accept()
 print(client_address)
 while True:
-    
     message, address = client.recvfrom(1024)
     print(message.decode())
