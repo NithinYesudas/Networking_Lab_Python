@@ -19,20 +19,17 @@ def xor(dividend,divisor):
     return result
 def mod2div(msg):
     length = len(key)
-    send = msg[0: length]
-    while length<len(msg):
-        if send[0]=='1':
-            send = xor(send,key) + msg[length]
+    temp = msg[0: length]
+    while length < len(msg):
+        if temp[0] == '1':
+            temp = xor(temp,key)+msg[length]
         else:
-            send = xor(send,'0'*length) + msg[length]
+            temp = xor(temp,'0'*length)+msg[length]
         length+=1
-    
-    if send[0]=='1':
-        send = xor(send,key)
+    if temp[0] == '1':
+        temp = xor(temp,key)
     else:
-        send = xor(send,'0'*length)
-    temp = send 
-    
+        temp = xor(temp,'0'*length)
     return temp
 def decode():
     reminder = mod2div(msg)
