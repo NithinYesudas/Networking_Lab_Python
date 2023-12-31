@@ -5,6 +5,7 @@ client_socket.connect(server_address)
 key = "1101"
 
 
+ 
 
 def xor(dividend,divisor):
     result = ''
@@ -16,14 +17,16 @@ def xor(dividend,divisor):
     
     return result
 def mod2div(msg):
-    length = len(key)
+    length = len(key)                                       
     send = msg[0: length]
-    while length<len(msg):
-        if send[0]=='1':
-            send = xor(send,key) + msg[length]
-        else:
-            send = xor(send,'0'*length) + msg[length]
-        length+=1
+    while length<len(msg):                                    
+
+        if send[0]=='1':                                              
+            send = xor(send,key) + msg[length]                        
+                                                                  
+        else:                                                          
+            send = xor(send,'0'*length) + msg[length]                  
+        length+=1                                                          
     
     if send[0]=='1':
         send = xor(send,key)

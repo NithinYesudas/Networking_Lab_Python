@@ -8,6 +8,7 @@ print(f"Server listening on: {server_address}")
 client, address = server.accept()
 encoded_msg,address = client.recvfrom(1024)
 msg = encoded_msg.decode()
+
 def xor(dividend,divisor):
     result = ''
     for i in range(1,len(dividend)):
