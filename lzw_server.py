@@ -1,13 +1,13 @@
 import socket
+import pickle
 server = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
 server_address = ('127.0.0.1',8000)
 server.bind(server_address)
 server.listen()
 client,address = server.accept()
-msg,address = client.recvfrom(1024)
-msg = msg.decode()
 
-def compress():
+
+def compress(msg):
     table = {chr(i):i for i in range(256)}
     p = msg[0]
     output_codes = []
@@ -25,5 +25,8 @@ def compress():
         c=''
     output_codes.append(table[p])
     print(output_codes)
-    client.send(output_codes)
-compress()
+    msg = pickle.dumps(output_codes)
+    client.send(msg)
+msg,address = client.recvfrom(1024)
+msg = msg.decode()
+compress(msg)
