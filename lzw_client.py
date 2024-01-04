@@ -7,22 +7,23 @@ msg = input("Enter message to send: ")
 client.send(msg.encode())
 
 def decode(codes):
+
     table = {i:chr(i) for i in range(256)}
+    p = chr(codes[0])
     current_code = 256
-   
-    current_sequence = chr(codes[0])
-    result = [current_sequence]
+    result= [p]
     for code in codes[1:]:
         if code in table:
-            entry = table[code]
+           c = table[code]
         elif code == current_code:
-            entry = current_sequence + current_sequence[0]
+            c = p + p[0]
         else:
-            raise ValueError("invalid data")
-        result.append(entry)
-        table[current_code] = current_sequence+entry[0]
+            raise ValueError("Invalid data")
+        result.append(c)
+        table[current_code] = p + c[0]
         current_code+=1
-        current_sequence=entry
+        p = c
+        
     return ''.join(result)
 
 msg, address = client.recvfrom(1024)
