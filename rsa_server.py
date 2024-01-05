@@ -1,22 +1,23 @@
 import socket
 import pickle
 server_socket = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
-server_address = ("127.0.0.1",8000)
+server_address = ("127.0.0.5",8004)
 server_socket.bind(server_address)
 server_socket.listen(5)
 print(f"Server listening on: {server_address}")
 client_socket, client_address = server_socket.accept()
 
-#encryption
-key = client_socket.recv(1024)
-e,n = pickle.loads(key)
-msg = client_socket.recv(1024).decode()
-print(f"to be Encrypted Message: {msg}")
-encrypted_msg = pow(int(msg),e,n)
-print(encrypted_msg)
+key=client_socket.recv(1024)
+e,n,msg=pickle.loads(key)
 
-#send to client
-client_socket.send(str(encrypted_msg).encode())
+print("Message to be encrypted: ",msg)
+result=""
+for char in msg:
+	encrypted_msg=pow(ord(char)-ord('A'),e,n)
+	result+=chr(encrypted_msg)
+
+print(f"Encrypted message: {result}")
+client_socket.send(result.encode())
 
 client_socket.close()
 server_socket.close()
